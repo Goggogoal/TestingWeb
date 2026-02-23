@@ -442,16 +442,16 @@ function setupGhostFormHandlers() {
         const data = {
             inspectorId: user?.username || '',
             warehouseCode: document.getElementById('ghostWarehouse').value,
-            sloc: document.getElementById('ghostSLoc').value,
+            sloc: String(document.getElementById('ghostSLoc').value),
             materialType: document.getElementById('ghostMaterialTypeField').value,
             batch: document.getElementById('ghostBatch').value,
             peaNo: document.getElementById('ghostPeaNo').value.trim(),
-            serialNo: document.getElementById('ghostSerialNo').value.trim(),
+            serialNo: String(document.getElementById('ghostSerialNo').value.trim()),
             contractNo: document.getElementById('ghostContractNo').value.trim(),
             brand: document.getElementById('ghostBrand').value.trim(),
             model: document.getElementById('ghostModel').value.trim(),
             instructorName: document.getElementById('ghostInspectorName').value.trim(),
-            phone: document.getElementById('ghostPhone').value.trim(),
+            phone: String(document.getElementById('ghostPhone').value.trim()),
             remarks: document.getElementById('ghostRemarks').value.trim()
         };
 
