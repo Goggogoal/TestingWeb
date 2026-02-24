@@ -557,7 +557,8 @@ function setupFormHandlers() {
         e.preventDefault();
         // Validate required Nameplate photo
         const npSrc = document.querySelector('#photoNameplate .photo-preview img')?.src;
-        if (!npSrc || npSrc === '' || npSrc === window.location.href) {
+        const hasNameplate = npSrc && npSrc !== '' && npSrc !== window.location.href;
+        if (!hasNameplate) {
             showToast('Nameplate Photo is required', 'error');
             return;
         }
