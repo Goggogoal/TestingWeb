@@ -555,6 +555,12 @@ function setupFormHandlers() {
     // Submit ★ two-phase: text first (instant), images in background
     document.getElementById('inspForm')?.addEventListener('submit', async e => {
         e.preventDefault();
+        // Validate required Nameplate photo
+        const npSrc = document.querySelector('#photoNameplate .photo-preview img')?.src || '';
+        if (!npSrc || npSrc === '' || npSrc === window.location.href) {
+            showToast('Nameplate Photo is required', 'error');
+            return;
+        }
         if (!confirm('Are you sure you want to save this inspection?')) return;
 
         const whCode = document.getElementById('inspWarehouseSelect')?.value;
