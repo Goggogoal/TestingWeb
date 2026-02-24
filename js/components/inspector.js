@@ -556,7 +556,7 @@ function setupFormHandlers() {
     document.getElementById('inspForm')?.addEventListener('submit', async e => {
         e.preventDefault();
         // Validate required Nameplate photo
-        const npSrc = document.querySelector('#photoNameplate .photo-preview img')?.src || '';
+        const npSrc = document.querySelector('#photoNameplate .photo-preview img')?.src;
         if (!npSrc || npSrc === '' || npSrc === window.location.href) {
             showToast('Nameplate Photo is required', 'error');
             return;
