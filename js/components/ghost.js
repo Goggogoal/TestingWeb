@@ -440,6 +440,7 @@ function setupGhostFormHandlers() {
         if (!npPreview || npPreview.style.display === 'none' || npPreview.style.display === '') {
             showToast('Nameplate Photo is required', 'error'); return;
         }
+        if (!confirm('Are you sure you want to save this Ghost item?')) return;
 
         const ovImg = document.querySelector('#ghostPhotoOverview .photo-preview img')?.src;
         const npImg = document.querySelector('#ghostPhotoNameplate .photo-preview img')?.src;
