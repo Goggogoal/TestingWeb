@@ -555,10 +555,9 @@ function setupFormHandlers() {
     // Submit ★ two-phase: text first (instant), images in background
     document.getElementById('inspForm')?.addEventListener('submit', async e => {
         e.preventDefault();
-        // Validate required Nameplate photo
-        const npSrc = document.querySelector('#photoNameplate .photo-preview img')?.src;
-        const hasNameplate = npSrc && npSrc !== '' && npSrc !== window.location.href;
-        if (!hasNameplate) {
+        // Validate required Nameplate photo (check if preview is visible)
+        const npPreview = document.querySelector('#photoNameplate .photo-preview');
+        if (!npPreview || npPreview.style.display === 'none' || npPreview.style.display === '') {
             showToast('Nameplate Photo is required', 'error');
             return;
         }
