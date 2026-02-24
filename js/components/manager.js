@@ -112,7 +112,7 @@ function reviewCard(i) {
                 <div><strong>ยี่ห้อ/Brand:</strong> ${i.brand || '-'}</div>
                 <div><strong>รุ่น/Model:</strong> ${i.model || '-'}</div>
                 <div><strong>Batch:</strong> ${i.batch === 'N' ? 'New' : 'Refurbished'}</div>
-                <div><strong>ชื่อผู้ตรวจ/Inspector:</strong> ${i.inspectorName || '-'}</div>
+                <div><strong>ชื่อผู้ตรวจ/Inspector:</strong> ${i.instructorName || '-'}</div>
             </div>
             ${i.remarks ? `<div class="insp-remarks"><i data-lucide="message-square"></i> ${i.remarks}</div>` : ''}
             ${i.managerComment ? `<div class="manager-comment"><i data-lucide="user-check"></i> Manager: ${i.managerComment}</div>` : ''}
