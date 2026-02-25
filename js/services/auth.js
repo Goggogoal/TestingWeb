@@ -18,8 +18,14 @@ export const auth = {
                 const user = result.user;
                 sessionStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(user));
                 store.set('user', user);
-                // Prime the data cache right after login
-                dataCache.loadAllData().catch(err => console.warn('[Auth] Background data load failed:', err));
+                // Load all data from server BEFORE returning (so dashboard has data)
+                try {
+                    await dataCache.loadAllData();
+                } catch (err) {
+                    console.warn('[Auth] Data load failed, will retry on navigation:', err);
+                }
+                // Process any queued writes from previous sessions
+                writeQueue.processRemaining();
                 store.set('loading', false);
                 return { success: true, user };
             } else {
