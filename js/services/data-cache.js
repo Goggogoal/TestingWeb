@@ -142,7 +142,7 @@ export const dataCache = {
         const inspected = filteredInsp.filter(i => i.status === 'Inspected' || i.status === 'Approved').length;
         const approved = filteredInsp.filter(i => i.status === 'Approved').length;
         const pending = filteredInsp.filter(i => i.status === 'Pending').length;
-        const progress = totalStock > 0 ? Math.round((inspected / totalStock) * 100) : 0;
+        const progress = totalStock > 0 ? Math.round((approved / totalStock) * 100) : 0;
 
         // Deduplicate warehouses by code
         const seenCodes = new Set();
@@ -160,14 +160,16 @@ export const dataCache = {
             const types = materialTypes.map(type => {
                 const stock = whMb52.filter(m => m.materialType === type).reduce((s, m) => s + m.qty, 0);
                 const done = whInsp.filter(i => i.materialType === type && (i.status === 'Inspected' || i.status === 'Approved')).length;
-                return { type, stock, done, progress: stock > 0 ? Math.round((done / stock) * 100) : 0 };
+                const approvedType = whInsp.filter(i => i.materialType === type && i.status === 'Approved').length;
+                return { type, stock, done, progress: stock > 0 ? Math.round((approvedType / stock) * 100) : 0 };
             });
             const totalWh = whMb52.reduce((s, m) => s + m.qty, 0);
             const doneWh = whInsp.filter(i => i.status === 'Inspected' || i.status === 'Approved').length;
+            const approvedWh = whInsp.filter(i => i.status === 'Approved').length;
             return {
                 name: wh.name, code, zone: wh.zone, slocs: [...slocSet],
                 totalStock: totalWh, inspected: doneWh,
-                progress: totalWh > 0 ? Math.round((doneWh / totalWh) * 100) : 0,
+                progress: totalWh > 0 ? Math.round((approvedWh / totalWh) * 100) : 0,
                 types
             };
         }).filter(w => w.totalStock > 0);
@@ -226,15 +228,17 @@ export const dataCache = {
             const types = materialTypes.map(type => {
                 const stock = slocMb52.filter(m => m.materialType === type).reduce((s, m) => s + m.qty, 0);
                 const done = slocInsp.filter(i => i.materialType === type && (i.status === 'Inspected' || i.status === 'Approved')).length;
-                return { type, stock, done, progress: stock > 0 ? Math.round((done / stock) * 100) : 0 };
+                const approvedType = slocInsp.filter(i => i.materialType === type && i.status === 'Approved').length;
+                return { type, stock, done, progress: stock > 0 ? Math.round((approvedType / stock) * 100) : 0 };
             });
             const total = slocMb52.reduce((s, m) => s + m.qty, 0);
             const done = slocInsp.filter(i => i.status === 'Inspected' || i.status === 'Approved').length;
+            const approvedSloc = slocInsp.filter(i => i.status === 'Approved').length;
             const whEntry = warehouses.find(w => w.code === warehouseCode && w.sloc === sloc);
             return {
                 sloc, slocName: whEntry ? whEntry.slocName : '',
                 types, totalStock: total, inspected: done,
-                progress: total > 0 ? Math.round((done / total) * 100) : 0
+                progress: total > 0 ? Math.round((approvedSloc / total) * 100) : 0
             };
         }).filter(s => s.totalStock > 0);
 
